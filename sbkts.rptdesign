@@ -15,6 +15,20 @@
     </list-property>
     <property name="Data Cube.SBKTS.x">135</property>
     <property name="Data Cube.SBKTS.y">80</property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">queryText</property>
+            <property name="id">1053</property>
+        </structure>
+        <structure>
+            <property name="name">queryTimeOut</property>
+            <property name="id">1053</property>
+        </structure>
+        <structure>
+            <property name="name">rowFetchSize</property>
+            <property name="id">1053</property>
+        </structure>
+    </list-property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
@@ -66,11 +80,29 @@
             <property name="nullsOrdering">nulls lowest</property>
             <list-property name="columnHints">
                 <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
                     <property name="columnName">id</property>
                     <property name="alias">id</property>
                     <property name="analysis">measure</property>
                     <text-property name="displayName" key="id">id</text-property>
                     <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">id_1</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">loading_area_description</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">loading_area_description</text-property>
+                    <text-property name="heading">loading_area_description</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">bso_number</property>
@@ -85,6 +117,18 @@
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">registration_number</text-property>
                     <text-property name="heading">registration_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">issue_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">issue_date</text-property>
+                    <text-property name="heading">issue_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">director_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">director_name</text-property>
+                    <text-property name="heading">director_name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">vin</property>
@@ -109,70 +153,66 @@
                 </structure>
                 <structure>
                     <property name="columnName">brand_name</property>
-                    <property name="alias">brand_name</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">brand_name</text-property>
                     <text-property name="heading">brand_name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">code</property>
-                    <property name="alias">code</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">code</text-property>
                     <text-property name="heading">code</text-property>
                 </structure>
                 <structure>
+                    <property name="columnName">vehicle_additional_information</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">vehicle_additional_information</text-property>
+                    <text-property name="heading">vehicle_additional_information</text-property>
+                </structure>
+                <structure>
                     <property name="columnName">environmental_class_name</property>
-                    <property name="alias">environmental_class_name</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">environmental_class_name</text-property>
                     <text-property name="heading">environmental_class_name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">length</property>
-                    <property name="alias">length</property>
                     <property name="analysis">measure</property>
                     <text-property name="displayName">length</text-property>
                     <text-property name="heading">length</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">width</property>
-                    <property name="alias">width</property>
                     <property name="analysis">measure</property>
                     <text-property name="displayName">width</text-property>
                     <text-property name="heading">width</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">height</property>
-                    <property name="alias">height</property>
                     <property name="analysis">measure</property>
                     <text-property name="displayName">height</text-property>
                     <text-property name="heading">height</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">wheelbase</property>
-                    <property name="alias">wheelbase</property>
                     <property name="analysis">measure</property>
                     <text-property name="displayName">wheelbase</text-property>
                     <text-property name="heading">wheelbase</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">vehicle_type</property>
-                    <property name="alias">vehicle_type</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">vehicle_type</text-property>
                     <text-property name="heading">vehicle_type</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">vehicle_commercial_name</property>
-                    <property name="alias">vehicle_commercial_name</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">vehicle_commercial_name</text-property>
                     <text-property name="heading">vehicle_commercial_name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">company_name</property>
-                    <property name="alias">company_name</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">company_name</text-property>
                     <text-property name="heading">company_name</text-property>
@@ -238,16 +278,28 @@
                     <text-property name="heading">number_of_wheel</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">hybrid_vehicle_description</property>
+                    <property name="columnName">transmission_name</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">hybrid_vehicle_description</text-property>
-                    <text-property name="heading">hybrid_vehicle_description</text-property>
+                    <text-property name="displayName">transmission_name</text-property>
+                    <text-property name="heading">transmission_name</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">fuel_system</property>
+                    <property name="columnName">transmission_scheme_description</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">fuel_system</text-property>
-                    <text-property name="heading">fuel_system</text-property>
+                    <text-property name="displayName">transmission_scheme_description</text-property>
+                    <text-property name="heading">transmission_scheme_description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">fuel_kind_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">fuel_kind_name</text-property>
+                    <text-property name="heading">fuel_kind_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">fuel_system_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">fuel_system_name</text-property>
+                    <text-property name="heading">fuel_system_name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">ignition_system</property>
@@ -260,6 +312,12 @@
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">exhaust_emission_system</text-property>
                     <text-property name="heading">exhaust_emission_system</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">hybrid_vehicle_description</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">hybrid_vehicle_description</text-property>
+                    <text-property name="heading">hybrid_vehicle_description</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">mass_kind_10</property>
@@ -275,35 +333,30 @@
                 </structure>
                 <structure>
                     <property name="columnName">legal_full_address</property>
-                    <property name="alias">legal_full_address</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">legal_full_address</text-property>
                     <text-property name="heading">legal_full_address</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">factual_full_address</property>
-                    <property name="alias">factual_full_address</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">factual_full_address</text-property>
                     <text-property name="heading">factual_full_address</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">contact_info</property>
-                    <property name="alias">contact_info</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">contact_info</text-property>
                     <text-property name="heading">contact_info</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">applicant_full_address</property>
-                    <property name="alias">applicant_full_address</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">applicant_full_address</text-property>
                     <text-property name="heading">applicant_full_address</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">manufacturer_full_address</property>
-                    <property name="alias">manufacturer_full_address</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">manufacturer_full_address</text-property>
                     <text-property name="heading">manufacturer_full_address</text-property>
@@ -331,191 +384,236 @@
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
                         <property name="name">id</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
-                        <property name="position">2</property>
-                        <property name="name">bso_number</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
                         <property name="position">3</property>
-                        <property name="name">registration_number</property>
-                        <property name="dataType">string</property>
+                        <property name="name">id_1</property>
+                        <property name="dataType">decimal</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">vin</property>
+                        <property name="name">loading_area_description</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">production_year</property>
-                        <property name="dataType">integer</property>
+                        <property name="name">bso_number</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">6</property>
-                        <property name="name">chassis_number</property>
+                        <property name="name">registration_number</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">brand_name</property>
-                        <property name="dataType">string</property>
+                        <property name="name">issue_date</property>
+                        <property name="dataType">date</property>
                     </structure>
                     <structure>
                         <property name="position">8</property>
-                        <property name="name">code</property>
+                        <property name="name">director_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">9</property>
-                        <property name="name">environmental_class_name</property>
+                        <property name="name">vin</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">10</property>
-                        <property name="name">length</property>
-                        <property name="dataType">decimal</property>
+                        <property name="name">production_year</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">11</property>
-                        <property name="name">width</property>
-                        <property name="dataType">decimal</property>
+                        <property name="name">chassis_number</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">12</property>
-                        <property name="name">height</property>
-                        <property name="dataType">decimal</property>
+                        <property name="name">brand_name</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">13</property>
-                        <property name="name">wheelbase</property>
-                        <property name="dataType">decimal</property>
+                        <property name="name">code</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">14</property>
-                        <property name="name">vehicle_type</property>
-                        <property name="dataType">decimal</property>
+                        <property name="name">vehicle_additional_information</property>
+                        <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">15</property>
-                        <property name="name">vehicle_commercial_name</property>
+                        <property name="name">environmental_class_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
+                        <property name="name">length</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">width</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">height</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">wheelbase</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">vehicle_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">vehicle_commercial_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
                         <property name="name">company_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">17</property>
+                        <property name="position">23</property>
                         <property name="name">vehicle_layout_scheme</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">18</property>
+                        <property name="position">24</property>
                         <property name="name">body_number</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">19</property>
+                        <property name="position">25</property>
                         <property name="name">passenger_capacity</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">20</property>
+                        <property name="position">26</property>
                         <property name="name">total_luggage_volume</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
-                        <property name="position">21</property>
+                        <property name="position">27</property>
                         <property name="name">number_of_seats</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">22</property>
+                        <property name="position">28</property>
                         <property name="name">frame_description</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">23</property>
+                        <property name="position">29</property>
                         <property name="name">vehicle_equipment_description</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">24</property>
+                        <property name="position">30</property>
                         <property name="name">eaec_category</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">25</property>
+                        <property name="position">31</property>
                         <property name="name">body_with_doors</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">26</property>
+                        <property name="position">32</property>
                         <property name="name">number_of_wheel</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">27</property>
-                        <property name="name">hybrid_vehicle_description</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">28</property>
-                        <property name="name">fuel_system</property>
-                        <property name="dataType">decimal</property>
-                    </structure>
-                    <structure>
-                        <property name="position">29</property>
-                        <property name="name">ignition_system</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">30</property>
-                        <property name="name">exhaust_emission_system</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">31</property>
-                        <property name="name">mass_kind_10</property>
-                        <property name="dataType">decimal</property>
-                    </structure>
-                    <structure>
-                        <property name="position">32</property>
-                        <property name="name">mass_kind_12</property>
-                        <property name="dataType">decimal</property>
-                    </structure>
-                    <structure>
                         <property name="position">33</property>
-                        <property name="name">legal_full_address</property>
+                        <property name="name">transmission_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">34</property>
-                        <property name="name">factual_full_address</property>
+                        <property name="name">transmission_scheme_description</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">35</property>
-                        <property name="name">contact_info</property>
+                        <property name="name">fuel_kind_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">36</property>
-                        <property name="name">applicant_full_address</property>
+                        <property name="name">fuel_system_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">37</property>
-                        <property name="name">manufacturer_full_address</property>
+                        <property name="name">ignition_system</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">38</property>
+                        <property name="name">exhaust_emission_system</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">hybrid_vehicle_description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">40</property>
+                        <property name="name">mass_kind_10</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">mass_kind_12</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">42</property>
+                        <property name="name">legal_full_address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">43</property>
+                        <property name="name">factual_full_address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">44</property>
+                        <property name="name">contact_info</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">45</property>
+                        <property name="name">applicant_full_address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">46</property>
+                        <property name="name">manufacturer_full_address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">47</property>
                         <property name="name">factory_full_address</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -525,265 +623,328 @@
             <list-property name="resultSet">
                 <structure>
                     <property name="position">1</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
                     <property name="name">id</property>
                     <property name="nativeName">id</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">-5</property>
                 </structure>
                 <structure>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
+                    <property name="name">id_1</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">loading_area_description</property>
+                    <property name="nativeName">loading_area_description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
                     <property name="name">bso_number</property>
                     <property name="nativeName">bso_number</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">3</property>
+                    <property name="position">6</property>
                     <property name="name">registration_number</property>
                     <property name="nativeName">registration_number</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">4</property>
+                    <property name="position">7</property>
+                    <property name="name">issue_date</property>
+                    <property name="nativeName">issue_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">director_name</property>
+                    <property name="nativeName">director_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
                     <property name="name">vin</property>
                     <property name="nativeName">vin</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">5</property>
+                    <property name="position">10</property>
                     <property name="name">production_year</property>
                     <property name="nativeName">production_year</property>
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
-                    <property name="position">6</property>
+                    <property name="position">11</property>
                     <property name="name">chassis_number</property>
                     <property name="nativeName">chassis_number</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">7</property>
+                    <property name="position">12</property>
                     <property name="name">brand_name</property>
                     <property name="nativeName">brand_name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">8</property>
+                    <property name="position">13</property>
                     <property name="name">code</property>
                     <property name="nativeName">code</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">9</property>
+                    <property name="position">14</property>
+                    <property name="name">vehicle_additional_information</property>
+                    <property name="nativeName">vehicle_additional_information</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
                     <property name="name">environmental_class_name</property>
                     <property name="nativeName">environmental_class_name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">10</property>
+                    <property name="position">16</property>
                     <property name="name">length</property>
                     <property name="nativeName">length</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">11</property>
+                    <property name="position">17</property>
                     <property name="name">width</property>
                     <property name="nativeName">width</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">12</property>
+                    <property name="position">18</property>
                     <property name="name">height</property>
                     <property name="nativeName">height</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">13</property>
+                    <property name="position">19</property>
                     <property name="name">wheelbase</property>
                     <property name="nativeName">wheelbase</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">14</property>
+                    <property name="position">20</property>
                     <property name="name">vehicle_type</property>
                     <property name="nativeName">vehicle_type</property>
-                    <property name="dataType">decimal</property>
-                    <property name="nativeDataType">-5</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">15</property>
+                    <property name="position">21</property>
                     <property name="name">vehicle_commercial_name</property>
                     <property name="nativeName">vehicle_commercial_name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">16</property>
+                    <property name="position">22</property>
                     <property name="name">company_name</property>
                     <property name="nativeName">company_name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">17</property>
+                    <property name="position">23</property>
                     <property name="name">vehicle_layout_scheme</property>
                     <property name="nativeName">vehicle_layout_scheme</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">18</property>
+                    <property name="position">24</property>
                     <property name="name">body_number</property>
                     <property name="nativeName">body_number</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">19</property>
+                    <property name="position">25</property>
                     <property name="name">passenger_capacity</property>
                     <property name="nativeName">passenger_capacity</property>
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
-                    <property name="position">20</property>
+                    <property name="position">26</property>
                     <property name="name">total_luggage_volume</property>
                     <property name="nativeName">total_luggage_volume</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">21</property>
+                    <property name="position">27</property>
                     <property name="name">number_of_seats</property>
                     <property name="nativeName">number_of_seats</property>
                     <property name="dataType">integer</property>
                     <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
-                    <property name="position">22</property>
+                    <property name="position">28</property>
                     <property name="name">frame_description</property>
                     <property name="nativeName">frame_description</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">23</property>
+                    <property name="position">29</property>
                     <property name="name">vehicle_equipment_description</property>
                     <property name="nativeName">vehicle_equipment_description</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">24</property>
+                    <property name="position">30</property>
                     <property name="name">eaec_category</property>
                     <property name="nativeName">eaec_category</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">25</property>
+                    <property name="position">31</property>
                     <property name="name">body_with_doors</property>
                     <property name="nativeName">body_with_doors</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">26</property>
+                    <property name="position">32</property>
                     <property name="name">number_of_wheel</property>
                     <property name="nativeName">number_of_wheel</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">27</property>
-                    <property name="name">hybrid_vehicle_description</property>
-                    <property name="nativeName">hybrid_vehicle_description</property>
+                    <property name="position">33</property>
+                    <property name="name">transmission_name</property>
+                    <property name="nativeName">transmission_name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">28</property>
-                    <property name="name">fuel_system</property>
-                    <property name="nativeName">fuel_system</property>
-                    <property name="dataType">decimal</property>
-                    <property name="nativeDataType">-5</property>
+                    <property name="position">34</property>
+                    <property name="name">transmission_scheme_description</property>
+                    <property name="nativeName">transmission_scheme_description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">29</property>
+                    <property name="position">35</property>
+                    <property name="name">fuel_kind_name</property>
+                    <property name="nativeName">fuel_kind_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">36</property>
+                    <property name="name">fuel_system_name</property>
+                    <property name="nativeName">fuel_system_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">37</property>
                     <property name="name">ignition_system</property>
                     <property name="nativeName">ignition_system</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">30</property>
+                    <property name="position">38</property>
                     <property name="name">exhaust_emission_system</property>
                     <property name="nativeName">exhaust_emission_system</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">31</property>
+                    <property name="position">39</property>
+                    <property name="name">hybrid_vehicle_description</property>
+                    <property name="nativeName">hybrid_vehicle_description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">40</property>
                     <property name="name">mass_kind_10</property>
                     <property name="nativeName">mass_kind_10</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">32</property>
+                    <property name="position">41</property>
                     <property name="name">mass_kind_12</property>
                     <property name="nativeName">mass_kind_12</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">33</property>
+                    <property name="position">42</property>
                     <property name="name">legal_full_address</property>
                     <property name="nativeName">legal_full_address</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">34</property>
+                    <property name="position">43</property>
                     <property name="name">factual_full_address</property>
                     <property name="nativeName">factual_full_address</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">35</property>
+                    <property name="position">44</property>
                     <property name="name">contact_info</property>
                     <property name="nativeName">contact_info</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">36</property>
+                    <property name="position">45</property>
                     <property name="name">applicant_full_address</property>
                     <property name="nativeName">applicant_full_address</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">37</property>
+                    <property name="position">46</property>
                     <property name="name">manufacturer_full_address</property>
                     <property name="nativeName">manufacturer_full_address</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">38</property>
+                    <property name="position">47</property>
                     <property name="name">factory_full_address</property>
                     <property name="nativeName">factory_full_address</property>
                     <property name="dataType">string</property>
@@ -791,20 +952,43 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[SELECT
-    sb.id,
-    sb.bso_number,
-    sb.registration_number,
-    variant.vin,
-    variant.production_year,
-    variant.chassis_number,
-    brand.name AS brand_name,
-    category.code,
-    environmental_class.code AS environmental_class_name,
+vehicle_type.name,
+    -- Основные данные по СБКТС
+    sb.id,                                  -- ID записи СБКТС
+    variant.id,
+    variant.loading_area_description,
+    sb.bso_number,                          -- Номер БСО
+    sb.registration_number,                 -- Регистрационный номер
+    sb.issue_date,
+    person.name AS director_name,
+    -- Основные данные по транспортному средству
+    variant.vin,                            -- VIN код ТС
+    variant.production_year,                -- Год выпуска
+    COALESCE(NULLIF(variant.chassis_number, ''), '-') AS chassis_number,  -- Номер шасси
+    brand.name AS brand_name,               -- Марка (бренд)
+    category.code,                          -- Категория ТС (EAEC)
+    variant.vehicle_additional_information,
+
+    -- Экологический класс (читаемый)
+    CASE environmental_class.code
+        WHEN '00' THEN 'нулевой'
+        WHEN '01' THEN 'первый'
+        WHEN '02' THEN 'второй'
+        WHEN '03' THEN 'третий'
+        WHEN '04' THEN 'четвёртый'
+        WHEN '05' THEN 'пятый'
+        WHEN '06' THEN 'шестой'
+        ELSE environmental_class.code
+    END AS environmental_class_name,
+
+    -- Габариты
     variant.length,
     variant.width,
     variant.height,
     variant.wheelbase,
-    variant.vehicle_type,
+
+    -- Доп. сведения по ТС
+    variant.manufacturer_vehicle_type_id AS vehicle_type,
     variant.vehicle_commercial_name,
     issued_by.name AS company_name,
     variant.vehicle_layout_scheme,
@@ -816,88 +1000,95 @@
     variant.vehicle_equipment_description,
     eaec_category.code AS eaec_category,
 
-    -- Тип кузова / кол-во дверей
--- Тип кузова / кол-во дверей
-CASE
-    WHEN vehicle_type.code IS NOT NULL
-         AND variant.number_of_doors IS NOT NULL
-         AND variant.number_of_doors <> 0
-    THEN (vehicle_type.code::text || '/' || variant.number_of_doors::text)
-    WHEN vehicle_type.code IS NOT NULL
-    THEN vehicle_type.code::text
-    WHEN variant.number_of_doors IS NOT NULL
-         AND variant.number_of_doors <> 0
-    THEN variant.number_of_doors::text
-    ELSE NULL::text
-END AS body_with_doors,
+    -- Тип кузова + количество дверей
+    CASE
+        WHEN vehicle_type.name IS NOT NULL
+             AND variant.number_of_doors IS NOT NULL
+             AND variant.number_of_doors <> 0
+        THEN (vehicle_type.name::text || '/' || variant.number_of_doors::text)
+        WHEN vehicle_type.name IS NOT NULL
+        THEN vehicle_type.name::text
+        WHEN variant.number_of_doors IS NOT NULL
+             AND variant.number_of_doors <> 0
+        THEN variant.number_of_doors::text
+        ELSE NULL::text
+    END AS body_with_doors,
 
-
-
-
-    -- Колесная формула / ведущие колеса
-CASE
-    WHEN variant.number_of_wheels IS NOT NULL AND variant.number_of_powered_wheels IS NOT NULL 
-        THEN (variant.number_of_wheels::text || '/' || variant.number_of_powered_wheels::text)
-    WHEN variant.number_of_wheels IS NOT NULL 
+    -- Колесная формула (число колёс x ведущие / расположение)
+    CASE
+        WHEN variant.number_of_wheels IS NOT NULL 
+             AND variant.number_of_powered_wheels IS NOT NULL 
+             AND variant.powered_wheels IS NOT NULL
+        THEN (variant.number_of_wheels::text || 'x' || variant.number_of_powered_wheels::text || '/' || variant.powered_wheels)
+        WHEN variant.number_of_wheels IS NOT NULL 
+             AND variant.number_of_powered_wheels IS NOT NULL
+        THEN (variant.number_of_wheels::text || 'x' || variant.number_of_powered_wheels::text)
+        WHEN variant.number_of_wheels IS NOT NULL
         THEN variant.number_of_wheels::text
-    WHEN variant.number_of_powered_wheels IS NOT NULL 
-        THEN variant.number_of_powered_wheels::text
-    ELSE NULL::text
-END AS number_of_wheel,
+        ELSE NULL::text
+    END AS number_of_wheel,
 
+    -- Системы ТС
+    transmission_type.name AS transmission_name,  -- 🔹 Трансмиссия
+    variant.transmission_scheme_description,
+    fuel_type.name AS fuel_kind_name,             -- 🔹 Вид топлива
+    fuel_system.name AS fuel_system_name,         -- 🔹 Топливная система
+    variant.ignition_system,                      -- Система зажигания
+    variant.exhaust_emission_system,              -- Система выпуска
+    variant.hybrid_vehicle_description,           -- Гибридная установка
 
-
-    variant.hybrid_vehicle_description,
-    variant.fuel_system,
-    variant.ignition_system,
-    variant.exhaust_emission_system,
-
-    -- Массы (вес)
+    -- Массы (по одной записи на каждый тип)
     mass10.mass AS mass_kind_10,
     mass12.mass AS mass_kind_12,
 
-    -- Юридический адрес
+    -- Юридический адрес организации
     (
         'юридический адрес: ' ||
         concat_ws(', ',
-            issued_by.legal_address_region,
-            issued_by.legal_address_district,
-            issued_by.legal_address_city,
-            issued_by.legal_address_locality,
+            NULLIF(issued_by.legal_address_region, '-'),
+            NULLIF(issued_by.legal_address_district, '-'),
+            NULLIF(issued_by.legal_address_city, '-'),
+            NULLIF(issued_by.legal_address_locality, '-'),
             CASE
-                WHEN issued_by.legal_address_street IS NOT NULL AND issued_by.legal_address_street != ''
+                WHEN issued_by.legal_address_street IS NOT NULL 
+                     AND issued_by.legal_address_street NOT IN ('', '-')
                 THEN 'ул. ' || issued_by.legal_address_street
             END,
             CASE
-                WHEN issued_by.legal_address_house_number IS NOT NULL AND issued_by.legal_address_house_number != ''
+                WHEN issued_by.legal_address_house_number IS NOT NULL 
+                     AND issued_by.legal_address_house_number NOT IN ('', '-')
                 THEN 'д. ' || issued_by.legal_address_house_number
             END
         )
     ) AS legal_full_address,
 
-    -- Фактический адрес
+    -- Фактический адрес организации
     (
         'фактический адрес: ' ||
         concat_ws(', ',
-            issued_by.address_region,
-            issued_by.address_district,
-            issued_by.address_city,
-            issued_by.address_locality,
+            NULLIF(issued_by.address_region, '-'),
+            NULLIF(issued_by.address_district, '-'),
+            NULLIF(issued_by.address_city, '-'),
+            NULLIF(issued_by.address_locality, '-'),
             CASE
-                WHEN issued_by.address_street IS NOT NULL AND issued_by.address_street != ''
+                WHEN issued_by.address_street IS NOT NULL 
+                     AND issued_by.address_street NOT IN ('', '-')
                 THEN 'ул. ' || issued_by.address_street
             END,
             CASE
-                WHEN issued_by.address_house_number IS NOT NULL AND issued_by.address_house_number != ''
+                WHEN issued_by.address_house_number IS NOT NULL 
+                     AND issued_by.address_house_number NOT IN ('', '-')
                 THEN 'д. ' || issued_by.address_house_number
             END
         )
     ) AS factual_full_address,
 
+    -- Контактные данные организации
     (
-        'тел: ' || COALESCE(issued_by.phone_number, '') ||
+        'тел: ' || COALESCE(NULLIF(issued_by.phone_number, '-'), '') ||
         CASE
-            WHEN issued_by.email IS NOT NULL AND issued_by.email != ''
+            WHEN issued_by.email IS NOT NULL 
+                 AND issued_by.email NOT IN ('', '-')
             THEN '; электронная почта: ' || issued_by.email || ';'
             ELSE ';'
         END
@@ -905,101 +1096,141 @@ END AS number_of_wheel,
 
     -- Полный адрес заявителя
     concat_ws(', ',
-        sb.applicant_name,
-        applicant_address_country.name,
-        sb.applicant_address_region,
-        sb.applicant_address_district,
-        sb.applicant_address_locality,
-        sb.applicant_address_city,
+        NULLIF(sb.applicant_name, '-'),
+        NULLIF(applicant_address_country.name, '-'),
+        NULLIF(sb.applicant_address_region, '-'),
+        NULLIF(sb.applicant_address_district, '-'),
+        NULLIF(sb.applicant_address_locality, '-'),
+        NULLIF(sb.applicant_address_city, '-'),
         CASE
-            WHEN sb.applicant_address_street IS NOT NULL AND sb.applicant_address_street != ''
+            WHEN sb.applicant_address_street IS NOT NULL 
+                 AND sb.applicant_address_street NOT IN ('', '-')
             THEN 'улица ' || sb.applicant_address_street
         END,
         CASE
-            WHEN sb.applicant_address_house_number IS NOT NULL AND sb.applicant_address_house_number != ''
+            WHEN sb.applicant_address_house_number IS NOT NULL 
+                 AND sb.applicant_address_house_number NOT IN ('', '-')
             THEN 'дом ' || sb.applicant_address_house_number
         END
     ) AS applicant_full_address,
 
     -- Полный адрес изготовителя
     concat_ws(', ',
-        sb.manufacturer_name,
-        manufacturer_address_country.name,
-        sb.manufacturer_address_region,
-        sb.manufacturer_address_district,
-        sb.manufacturer_address_locality,
-        sb.manufacturer_address_city,
+        NULLIF(sb.manufacturer_name, '-'),
+        NULLIF(manufacturer_address_country.name, '-'),
+        NULLIF(sb.manufacturer_address_region, '-'),
+        NULLIF(sb.manufacturer_address_district, '-'),
+        NULLIF(sb.manufacturer_address_locality, '-'),
+        NULLIF(sb.manufacturer_address_city, '-'),
         CASE
-            WHEN sb.manufacturer_address_street IS NOT NULL AND sb.manufacturer_address_street != ''
+            WHEN sb.manufacturer_address_street IS NOT NULL 
+                 AND sb.manufacturer_address_street NOT IN ('', '-')
             THEN 'улица ' || sb.manufacturer_address_street
         END,
         CASE
-            WHEN sb.manufacturer_address_house_number IS NOT NULL AND sb.manufacturer_address_house_number != ''
+            WHEN sb.manufacturer_address_house_number IS NOT NULL 
+                 AND sb.manufacturer_address_house_number NOT IN ('', '-')
             THEN 'дом ' || sb.manufacturer_address_house_number
         END
     ) AS manufacturer_full_address,
 
     -- Полный адрес сборочного завода
     concat_ws(', ',
-        sb.factory_manufacturer_name,
-        factory_address_country.name,
-        sb.factory_manufacturer_address_region,
-        sb.factory_manufacturer_address_district,
-        sb.factory_manufacturer_address_locality,
-        sb.factory_manufacturer_address_city,
+        NULLIF(sb.factory_manufacturer_name, ''),
+        NULLIF(factory_address_country.name, ''),
+        NULLIF(sb.factory_manufacturer_address_region, '-'),
+        NULLIF(sb.factory_manufacturer_address_district, '-'),
+        NULLIF(sb.factory_manufacturer_address_locality, '-'),
+        NULLIF(sb.factory_manufacturer_address_city, '-'),
         CASE
-            WHEN sb.factory_manufacturer_address_street IS NOT NULL AND sb.factory_manufacturer_address_street != ''
+            WHEN sb.factory_manufacturer_address_street IS NOT NULL 
+                 AND sb.factory_manufacturer_address_street NOT IN ('', '-')
             THEN 'улица ' || sb.factory_manufacturer_address_street
         END,
         CASE
-            WHEN sb.factory_manufacturer_address_house_number IS NOT NULL AND sb.factory_manufacturer_address_house_number != ''
+            WHEN sb.factory_manufacturer_address_house_number IS NOT NULL 
+                 AND sb.factory_manufacturer_address_house_number NOT IN ('', '-')
             THEN 'дом ' || sb.factory_manufacturer_address_house_number
         END
     ) AS factory_full_address
 
 FROM sbkts_sbkts AS sb
 
--- Vehicle info
+-- Данные по ТС
 LEFT JOIN dictionary_vehicle_variant AS variant
        ON variant.id = sb.vehicle_variant_details
-       
+
+-- Бренд
 LEFT JOIN dictionary_vehicle_brand AS brand
        ON brand.id = variant.vehicle_brand
 
+-- Категория ТС
 LEFT JOIN dictionary_eaec_vehicle_category AS category
        ON category.id = variant.vehicle_technical_category
 
+-- Экологический класс
 LEFT JOIN dictionary_environmental_class AS environmental_class
        ON environmental_class.id = variant.emission_class
 
-left JOIN dictionary_eaec_vehicle_category as eaec_category
-	  ON  variant.vehicle_technical_category = eaec_category.id
+-- Категория ЕАЭС
+LEFT JOIN dictionary_eaec_vehicle_category AS eaec_category
+       ON variant.vehicle_technical_category = eaec_category.id
 
--- Issued by
+-- Организация, выдавшая документ
 LEFT JOIN dictionary_registered_person AS issued_by
        ON issued_by.id = sb.issued_by
 
--- Массы (вес)
-LEFT JOIN dictionary_vehicle_mass AS mass10
-       ON mass10.vehicle_variant = variant.id
-LEFT JOIN dictionary_vehicle_mass_type AS type10
-       ON type10.id = mass10.mass_kind AND type10.code = '10'
+-- Трансмиссия
+LEFT JOIN dictionary_transmission_type AS transmission_type
+       ON transmission_type.id = variant.transmission_description
 
-LEFT JOIN dictionary_vehicle_mass AS mass12
-       ON mass12.vehicle_variant = variant.id
-LEFT JOIN dictionary_vehicle_mass_type AS type12
-       ON type12.id = mass12.mass_kind AND type12.code = '12'
+-- Вид топлива
+LEFT JOIN dictionary_fuel_type AS fuel_type
+       ON fuel_type.id = variant.fuel_kind
 
--- Countries
+-- Топливная система
+LEFT JOIN dictionary_fuel_supply_system AS fuel_system
+       ON fuel_system.id = variant.fuel_system
+
+-- Масса (тип 10)
+LEFT JOIN (
+    SELECT DISTINCT ON (m.vehicle_variant) m.vehicle_variant, m.mass
+    FROM dictionary_vehicle_mass m
+    JOIN dictionary_vehicle_mass_type t ON t.id = m.mass_kind
+    WHERE t.code = '10'
+    ORDER BY m.vehicle_variant, m.id
+) AS mass10 ON mass10.vehicle_variant = variant.id
+
+-- Масса (тип 12)
+LEFT JOIN (
+    SELECT DISTINCT ON (m.vehicle_variant) m.vehicle_variant, m.mass
+    FROM dictionary_vehicle_mass m
+    JOIN dictionary_vehicle_mass_type t ON t.id = m.mass_kind
+    WHERE t.code = '12'
+    ORDER BY m.vehicle_variant, m.id
+) AS mass12 ON mass12.vehicle_variant = variant.id
+
+-- Страны (адреса)
 LEFT JOIN base_country AS applicant_address_country
        ON applicant_address_country.id = sb.applicant_address_country
 LEFT JOIN base_country AS manufacturer_address_country
        ON manufacturer_address_country.id = sb.manufacturer_address_country
 LEFT JOIN base_country AS factory_address_country
        ON factory_address_country.id = sb.factory_manufacturer_address_country
-       LEFT JOIN dictionary_body_type AS vehicle_type
+
+-- Тип кузова
+LEFT JOIN dictionary_body_type AS vehicle_type
        ON vehicle_type.id = variant.vehicle_type
-       
+
+left join dictionary_sign as sign_info
+		on sb.sign_info = sign_info.id
+
+-- Директор
+LEFT JOIN auth_user AS director
+       ON director.id = sign_info.created_by
+left join dictionary_registered_person as person
+	on person.id = director.registered_person
+
 WHERE sb.id = ?;
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1599,12 +1830,12 @@ WHERE sb.id = ?;
                     <structure>
                         <property name="position">3</property>
                         <property name="name">front_seat_quantity</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">decimal</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
                         <property name="name">rear_seat_quantity</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">decimal</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
@@ -1633,15 +1864,15 @@ WHERE sb.id = ?;
                     <property name="position">3</property>
                     <property name="name">front_seat_quantity</property>
                     <property name="nativeName">front_seat_quantity</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">rear_seat_quantity</property>
                     <property name="nativeName">rear_seat_quantity</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
@@ -1655,25 +1886,25 @@ WHERE sb.id = ?;
     sb.id AS sbkts_id,
     variant.id AS variant_id,
 
-    -- Алдыңкы катар (минималдуу sequenceNumber)
+    -- Алдыңкы катар (минималдуу sequence_number)
     (
-        SELECT vsr.seat_quantity
+        SELECT trim_scale(vsr.seat_quantity)
         FROM dictionary_vehicle_seat_raw vsr
         WHERE vsr.vehicle_variant = variant.id
         ORDER BY vsr.sequence_number ASC
         LIMIT 1
     ) AS front_seat_quantity,
 
-    -- Арткы катар (максималдуу sequenceNumber)
+    -- Арткы катар (максималдуу sequence_number)
     (
-        SELECT vsr.seat_quantity
+        SELECT trim_scale(vsr.seat_quantity)
         FROM dictionary_vehicle_seat_raw vsr
         WHERE vsr.vehicle_variant = variant.id
         ORDER BY vsr.sequence_number DESC
         LIMIT 1
     ) AS rear_seat_quantity,
 
-    -- Комбинацияланган мааниси
+    -- Комбинацияланган мааниси (мисалы: "2/3", "2", же "3")
     CASE
         WHEN COALESCE((
             SELECT vsr.seat_quantity
@@ -1681,36 +1912,38 @@ WHERE sb.id = ?;
             WHERE vsr.vehicle_variant = variant.id
             ORDER BY vsr.sequence_number ASC
             LIMIT 1
-        ), 0) = 0 
-            THEN (
-                SELECT vsr.seat_quantity::text
-                FROM dictionary_vehicle_seat_raw vsr
-                WHERE vsr.vehicle_variant = variant.id
-                ORDER BY vsr.sequence_number DESC
-                LIMIT 1
-            )
+        ), 0) = 0
+        THEN (
+            SELECT trim_scale(vsr.seat_quantity)::text
+            FROM dictionary_vehicle_seat_raw vsr
+            WHERE vsr.vehicle_variant = variant.id
+            ORDER BY vsr.sequence_number DESC
+            LIMIT 1
+        )
+
         WHEN COALESCE((
             SELECT vsr.seat_quantity
             FROM dictionary_vehicle_seat_raw vsr
             WHERE vsr.vehicle_variant = variant.id
             ORDER BY vsr.sequence_number DESC
             LIMIT 1
-        ), 0) = 0 
-            THEN (
-                SELECT vsr.seat_quantity::text
-                FROM dictionary_vehicle_seat_raw vsr
-                WHERE vsr.vehicle_variant = variant.id
-                ORDER BY vsr.sequence_number ASC
-                LIMIT 1
-            )
+        ), 0) = 0
+        THEN (
+            SELECT trim_scale(vsr.seat_quantity)::text
+            FROM dictionary_vehicle_seat_raw vsr
+            WHERE vsr.vehicle_variant = variant.id
+            ORDER BY vsr.sequence_number ASC
+            LIMIT 1
+        )
+
         ELSE (
-            (SELECT vsr.seat_quantity::text
+            (SELECT trim_scale(vsr.seat_quantity)::text
              FROM dictionary_vehicle_seat_raw vsr
              WHERE vsr.vehicle_variant = variant.id
              ORDER BY vsr.sequence_number ASC
              LIMIT 1)
             || '/' ||
-            (SELECT vsr.seat_quantity::text
+            (SELECT trim_scale(vsr.seat_quantity)::text
              FROM dictionary_vehicle_seat_raw vsr
              WHERE vsr.vehicle_variant = variant.id
              ORDER BY vsr.sequence_number DESC
@@ -5363,20 +5596,20 @@ WHERE sb.id = ?
 
     -- Электромашины типа '01' в формате description/name,description/name,...
     (
-        SELECT string_agg(em_desc_kind, ',')
-        FROM (
-            SELECT em.electric_motor_description || '/' || emk.name AS em_desc_kind
-            FROM dictionary_vehicle_electric_motor em
-            LEFT JOIN dictionary_electric_machine_type emk
-                   ON em.electric_motor_kind = emk.id
-            WHERE em.vehicle_variant = v.id
-              AND emk.code = '01'
-        ) AS em_sub
+        SELECT string_agg(
+                   COALESCE(em.electric_motor_description, '-') || '/' || COALESCE(emk.name, '-'),
+                   ', '
+               )
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code = '01'
     ) AS electric_motors_01,
 
-    -- Рабочее напряжение электромашин типа '01', через запятую
+    -- Рабочее напряжение электромашин типа '01', через запятую (формат без .00)
     (
-        SELECT string_agg(em.electric_motor_operating_voltage::text, ',')
+        SELECT string_agg(trim_scale(em.electric_motor_operating_voltage)::text, ', ')
         FROM dictionary_vehicle_electric_motor em
         LEFT JOIN dictionary_electric_machine_type emk
                ON em.electric_motor_kind = emk.id
@@ -5386,7 +5619,7 @@ WHERE sb.id = ?
 
     -- Единица измерения максимальной 30-минутной мощности, через запятую
     (
-        SELECT string_agg(mu.name, ',')
+        SELECT string_agg(mu.name, ', ')
         FROM dictionary_vehicle_electric_motor em
         LEFT JOIN dictionary_electric_machine_type emk
                ON em.electric_motor_kind = emk.id
@@ -6329,7 +6562,10 @@ WHERE sb.id = ?;
 
     -- Электромашины с code != '01' в формате description/name,description/name,...
     (
-        SELECT string_agg(em.electric_motor_description || '/' || emk.name, ',')
+        SELECT string_agg(
+                   COALESCE(em.electric_motor_description, '-') || '/' || COALESCE(emk.name, '-'),
+                   ', '
+               )
         FROM dictionary_vehicle_electric_motor em
         LEFT JOIN dictionary_electric_machine_type emk
                ON em.electric_motor_kind = emk.id
@@ -6337,9 +6573,9 @@ WHERE sb.id = ?;
           AND emk.code != '01'
     ) AS electric_motors_not_01,
 
-    -- Рабочее напряжение электромашин с code != '01', через запятую
+    -- Рабочее напряжение электромашин с code != '01' (без .00)
     (
-        SELECT string_agg(em.electric_motor_operating_voltage::text, ',')
+        SELECT string_agg(trim_scale(em.electric_motor_operating_voltage)::text, ', ')
         FROM dictionary_vehicle_electric_motor em
         LEFT JOIN dictionary_electric_machine_type emk
                ON em.electric_motor_kind = emk.id
@@ -6347,9 +6583,9 @@ WHERE sb.id = ?;
           AND emk.code != '01'
     ) AS electric_motor_operating_voltage_not_01,
 
-    -- Единица измерения максимальной 30-минутной мощности, через запятую
+    -- Единица измерения максимальной 30-минутной мощности (через запятую)
     (
-        SELECT string_agg(mu.name, ',')
+        SELECT string_agg(mu.name, ', ')
         FROM dictionary_vehicle_electric_motor em
         LEFT JOIN dictionary_electric_machine_type emk
                ON em.electric_motor_kind = emk.id
@@ -10741,6 +10977,7 @@ WHERE sb.id = ?;
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Трансмиссия" id="1065">
+            <property name="nullsOrdering">nulls lowest</property>
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">sbkts_id</property>
@@ -10819,10 +11056,12 @@ WHERE sb.id = ?;
             <xml-property name="queryText"><![CDATA[SELECT
     sb.id AS sbkts_id,
     v.id AS variant_id,
-    v.transmission_description || ',' || v.transmission_scheme_description AS transmission
+    tt.name || ', ' || v.transmission_scheme_description AS transmission
 FROM sbkts_sbkts AS sb
 LEFT JOIN dictionary_vehicle_variant AS v
        ON v.id = sb.vehicle_variant_details
+LEFT JOIN dictionary_transmission_type AS tt
+       ON tt.id = v.transmission_description
 WHERE sb.id = ?;
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -13594,7 +13833,7 @@ WHERE sb.id = ?;
                     <structure>
                         <property name="position">2</property>
                         <property name="name">number_of_wheels</property>
-                        <property name="dataType">integer</property>
+                        <property name="dataType">decimal</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
@@ -13625,14 +13864,14 @@ WHERE sb.id = ?;
                     <property name="name">number_of_axles</property>
                     <property name="nativeName">number_of_axles</property>
                     <property name="dataType">decimal</property>
-                    <property name="nativeDataType">-5</property>
+                    <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">number_of_wheels</property>
                     <property name="nativeName">number_of_wheels</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
@@ -13664,41 +13903,56 @@ WHERE sb.id = ?;
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[SELECT
-    -- Количество осей
-    (SELECT COUNT(*) 
-     FROM dictionary_vehicle_axle va 
-     WHERE va.vehicle_variant = sb.vehicle_variant_details) AS number_of_axles,
+    -- Количество осей (всегда целое число)
+    trim_scale((
+        SELECT COUNT(*) 
+        FROM dictionary_vehicle_axle va 
+        WHERE va.vehicle_variant = sb.vehicle_variant_details
+    )) AS number_of_axles,
 
-    v.number_of_wheels,
+    -- Количество колёс
+    trim_scale(v.number_of_wheels) AS number_of_wheels,
 
     -- Кол-во осей / колёс
     CASE
         WHEN (v.number_of_wheels IS NOT NULL AND v.number_of_wheels > 0)
          AND ((SELECT COUNT(*) FROM dictionary_vehicle_axle va WHERE va.vehicle_variant = sb.vehicle_variant_details) > 0)
         THEN
-            (SELECT COUNT(*) FROM dictionary_vehicle_axle va WHERE va.vehicle_variant = sb.vehicle_variant_details)::text
-            || '/' || v.number_of_wheels::text
+            trim_scale((
+                SELECT COUNT(*) 
+                FROM dictionary_vehicle_axle va 
+                WHERE va.vehicle_variant = sb.vehicle_variant_details
+            ))::text
+            || '/' || trim_scale(v.number_of_wheels)::text
         WHEN ((SELECT COUNT(*) FROM dictionary_vehicle_axle va WHERE va.vehicle_variant = sb.vehicle_variant_details) > 0)
-        THEN (SELECT COUNT(*) FROM dictionary_vehicle_axle va WHERE va.vehicle_variant = sb.vehicle_variant_details)::text
+        THEN trim_scale((
+                SELECT COUNT(*) 
+                FROM dictionary_vehicle_axle va 
+                WHERE va.vehicle_variant = sb.vehicle_variant_details
+            ))::text
         WHEN (v.number_of_wheels IS NOT NULL AND v.number_of_wheels > 0)
-        THEN v.number_of_wheels::text
+        THEN trim_scale(v.number_of_wheels)::text
         ELSE NULL
     END AS axles_wheels_info,
 
     -- Передний и задний колеи осей
-    (SELECT va.axle_track
-     FROM dictionary_vehicle_axle va
-     WHERE va.vehicle_variant = sb.vehicle_variant_details
-     ORDER BY va.id ASC
-     LIMIT 1) AS front_axle_track,
+    trim_scale((
+        SELECT va.axle_track
+        FROM dictionary_vehicle_axle va
+        WHERE va.vehicle_variant = sb.vehicle_variant_details
+        ORDER BY va.id ASC
+        LIMIT 1
+    )) AS front_axle_track,
 
-    (SELECT va.axle_track
-     FROM dictionary_vehicle_axle va
-     WHERE va.vehicle_variant = sb.vehicle_variant_details
-     ORDER BY va.id DESC
-     LIMIT 1) AS rear_axle_track,
+    trim_scale((
+        SELECT va.axle_track
+        FROM dictionary_vehicle_axle va
+        WHERE va.vehicle_variant = sb.vehicle_variant_details
+        ORDER BY va.id DESC
+        LIMIT 1
+    )) AS rear_axle_track,
 
-    -- Итоговая строка (только если "Передний" не пустой)
+    -- Итоговая строка "X / Y" без лишних нулей
     CASE
         WHEN (
             (SELECT va.axle_track
@@ -13708,17 +13962,16 @@ WHERE sb.id = ?;
              LIMIT 1) IS NOT NULL
         )
         THEN
-            'Передний — ' ||
             COALESCE((
-                SELECT va.axle_track::text
+                SELECT trim_scale(va.axle_track)::text
                 FROM dictionary_vehicle_axle va
                 WHERE va.vehicle_variant = sb.vehicle_variant_details
                 ORDER BY va.id ASC
                 LIMIT 1
             ), '-') ||
-            ' / Задний — ' ||
+            ' / ' ||
             COALESCE((
-                SELECT va.axle_track::text
+                SELECT trim_scale(va.axle_track)::text
                 FROM dictionary_vehicle_axle va
                 WHERE va.vehicle_variant = sb.vehicle_variant_details
                 ORDER BY va.id DESC
@@ -14543,6 +14796,7 @@ WHERE sb.id = ?;
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Двигательвнутреннегосгорания" id="1053">
+            <property name="nullsOrdering">nulls lowest</property>
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">sbkts_id</property>
@@ -14585,6 +14839,12 @@ WHERE sb.id = ?;
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">engines_max_power</text-property>
                     <text-property name="heading">engines_max_power</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">engine_type_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">engine_type_name</text-property>
+                    <text-property name="heading">engine_type_name</text-property>
                 </structure>
             </list-property>
             <list-property name="parameters">
@@ -14634,6 +14894,11 @@ WHERE sb.id = ?;
                     <structure>
                         <property name="position">7</property>
                         <property name="name">engines_max_power</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">engine_type_name</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -14689,51 +14954,76 @@ WHERE sb.id = ?;
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">engine_type_name</property>
+                    <property name="nativeName">engine_type_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[SELECT
     sb.id AS sbkts_id,
     v.id AS variant_id,
 
-    -- Двигатели внутреннего сгорания в формате value,value,value
+    -- Двигатели внутреннего сгорания (value,value,value)
     (
         SELECT string_agg(e.engine_description, ', ')
         FROM dictionary_engine e
         WHERE e.vehicle_variant = v.id
     ) AS engines_description,
 
-    -- Цилиндры в формате count/layout,count/layout,...
+    -- Цилиндры (count/layout,count/layout,...)
     (
-        SELECT string_agg(e.cylinder_count::text || '/' || e.cylinder_layout_description, ', ')
+        SELECT string_agg(
+            e.cylinder_count::text || '/' || cl.name, ', '
+        )
         FROM dictionary_engine e
+        LEFT JOIN dictionary_cylinder_location cl
+               ON cl.id = e.cylinder_layout_description
         WHERE e.vehicle_variant = v.id
     ) AS engines_cylinders,
 
-    -- Рабочий объем цилиндров в формате value,value,value
+    -- Рабочий объем цилиндров
     (
-        SELECT string_agg(e.cylinder_working_volume::text, ', ')
+        SELECT string_agg(trim_scale(e.cylinder_working_volume)::text, ', ')
         FROM dictionary_engine e
         WHERE e.vehicle_variant = v.id
     ) AS engines_working_volume,
 
-    -- Степень сжатия в формате value,value,value
+    -- Степень сжатия
     (
-        SELECT string_agg(e.engine_compression_rate::text, ', ')
+        SELECT string_agg(trim_scale(e.engine_compression_rate)::text, ', ')
         FROM dictionary_engine e
         WHERE e.vehicle_variant = v.id
     ) AS engines_compression_rate,
 
-    -- Максимальная мощность в формате value,value,value
+    -- Максимальная мощность
     (
-        SELECT string_agg(e.engine_max_power::text, ', ')
+        SELECT string_agg(trim_scale(e.engine_max_power)::text, ', ')
         FROM dictionary_engine e
         WHERE e.vehicle_variant = v.id
-    ) AS engines_max_power
+    ) AS engines_max_power,
+
+    -- Тип двигателя
+    CASE v.engine_type
+        WHEN 'gasoline'       THEN 'Бензин'
+        WHEN 'gasolineHybrid' THEN 'Бензин-гибрид'
+        WHEN 'diesel'         THEN 'Дизель'
+        WHEN 'dieselHybrid'   THEN 'Дизель-гибрид'
+        WHEN 'gas'            THEN 'Газ'
+        WHEN 'gasGasoline'    THEN 'Газ-бензин'
+        WHEN 'gasHybrid'      THEN 'Газ-гибрид'
+        WHEN 'electric'       THEN 'Электромобиль'
+        WHEN 'absent'         THEN 'Отсутствует'
+        ELSE v.engine_type
+    END AS engine_type_name
 
 FROM sbkts_sbkts AS sb
--- Corrected table name from 'dictionary_vehicle_variant_details'
 LEFT JOIN dictionary_vehicle_variant AS v
        ON v.id = sb.vehicle_variant_details
-WHERE sb.id = ?;]]></xml-property>
+WHERE sb.id = ?;
+]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -16219,7 +16509,6 @@ WHERE sb.id = ?;]]></xml-property>
                             <property name="width">4.427083333333333in</property>
                         </column>
                         <row id="86">
-                            <property name="height">0.2708333333333333in</property>
                             <cell id="87">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -16261,7 +16550,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="89">
-                            <property name="height">0.40625in</property>
                             <cell id="90">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -16303,7 +16591,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="282">
-                            <property name="height">0.3958333333333333in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16352,7 +16639,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="286">
-                            <property name="height">0.3854166666666667in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16429,7 +16715,7 @@ WHERE sb.id = ?;]]></xml-property>
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <data id="973">
+                                <data id="1133">
                                     <property name="fontSize">11pt</property>
                                     <property name="marginLeft">3pt</property>
                                     <property name="dataSet">SBKTS</property>
@@ -16481,17 +16767,17 @@ WHERE sb.id = ?;]]></xml-property>
             <property name="resultSetColumn">registration_number</property>
         </data>
         <grid id="829">
-            <property name="height">9.53125in</property>
+            <property name="height">14.28125in</property>
             <property name="width">7.427083333333333in</property>
             <column id="830">
                 <property name="width">7.427083333333333in</property>
             </column>
             <row id="831">
-                <property name="height">9.53125in</property>
+                <property name="height">14.28125in</property>
                 <cell id="832">
                     <property name="fontFamily">"Times New Roman"</property>
                     <grid id="833">
-                        <property name="height">10.010416666666666in</property>
+                        <property name="height">10.625in</property>
                         <property name="width">7.34375in</property>
                         <property name="dataSet">категория</property>
                         <list-property name="boundDataColumns">
@@ -16509,7 +16795,6 @@ WHERE sb.id = ?;]]></xml-property>
                             <property name="width">4.416666666666667in</property>
                         </column>
                         <row id="836">
-                            <property name="height">0.23958333333333334in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16540,10 +16825,22 @@ WHERE sb.id = ?;]]></xml-property>
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
+                                <data id="1166">
+                                    <property name="marginLeft">3pt</property>
+                                    <property name="dataSet">SBKTS</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">name</property>
+                                            <text-property name="displayName">name</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["name"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">name</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="839">
-                            <property name="height">0.3541666666666667in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16591,11 +16888,10 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="842">
-                            <property name="height">0.3958333333333333in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["code"]!='M1'</expression>
+                                    <expression name="valueExpr" type="javascript">row["code"]!='M3'</expression>
                                 </structure>
                             </list-property>
                             <cell id="843">
@@ -16639,7 +16935,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="845">
-                            <property name="height">0.3645833333333333in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16687,7 +16982,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="848">
-                            <property name="height">0.22916666666666666in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16735,7 +17029,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="851">
-                            <property name="height">0.23958333333333334in</property>
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
@@ -16783,7 +17076,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="854">
-                            <property name="height">0.375in</property>
                             <cell id="855">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -16824,7 +17116,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="864">
-                            <property name="height">0.34375in</property>
                             <cell id="865">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -16985,7 +17276,7 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="884">
-                            <property name="height">0.1875in</property>
+                            <property name="height">0.20833333333333334in</property>
                             <cell id="885">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17027,7 +17318,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="888">
-                            <property name="height">0.19791666666666666in</property>
                             <cell id="889">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17067,7 +17357,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="891">
-                            <property name="height">0.20833333333333334in</property>
                             <cell id="892">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17192,6 +17481,9 @@ WHERE sb.id = ?;]]></xml-property>
                                 <property name="borderRightWidth">thin</property>
                                 <data id="1056">
                                     <property name="marginLeft">3pt</property>
+                                    <structure name="stringFormat">
+                                        <property name="category">Unformatted</property>
+                                    </structure>
                                     <property name="dataSet">Двигательвнутреннегосгорания</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
@@ -17237,10 +17529,8 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="912">
-                            <property name="height">0.23958333333333334in</property>
+                            <property name="height">0.19791666666666666in</property>
                             <cell id="913">
-                                <property name="borderBottomStyle">solid</property>
-                                <property name="borderBottomWidth">thin</property>
                                 <property name="borderLeftStyle">solid</property>
                                 <property name="borderLeftWidth">thin</property>
                                 <label id="918">
@@ -17250,8 +17540,6 @@ WHERE sb.id = ?;]]></xml-property>
                                 </label>
                             </cell>
                             <cell id="914">
-                                <property name="borderBottomStyle">solid</property>
-                                <property name="borderBottomWidth">thin</property>
                                 <property name="borderLeftStyle">solid</property>
                                 <property name="borderLeftWidth">thin</property>
                                 <property name="borderRightStyle">solid</property>
@@ -17271,8 +17559,43 @@ WHERE sb.id = ?;]]></xml-property>
                                 </data>
                             </cell>
                         </row>
+                        <row id="1119">
+                            <property name="height">0.23958333333333334in</property>
+                            <cell id="1120">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <label id="1123">
+                                    <property name="fontSize">10pt</property>
+                                    <property name="marginLeft">3pt</property>
+                                    <text-property name="text">- топлива</text-property>
+                                </label>
+                            </cell>
+                            <cell id="1121">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <data id="1125">
+                                    <property name="fontSize">10pt</property>
+                                    <property name="marginLeft">3pt</property>
+                                    <property name="dataSet">Двигательвнутреннегосгорания</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">engine_type_name</property>
+                                            <text-property name="displayName">engine_type_name</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["engine_type_name"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">engine_type_name</property>
+                                </data>
+                            </cell>
+                        </row>
                         <row id="915">
-                            <property name="height">0.21875in</property>
                             <cell id="916">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17314,7 +17637,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="920">
-                            <property name="height">0.20833333333333334in</property>
                             <cell id="921">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17356,7 +17678,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="923">
-                            <property name="height">0.3541666666666667in</property>
                             <cell id="924">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17398,7 +17719,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="928">
-                            <property name="height">0.21875in</property>
                             <cell id="929">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17439,7 +17759,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="932">
-                            <property name="height">0.21875in</property>
                             <cell id="933">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17480,7 +17799,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="936">
-                            <property name="height">0.23958333333333334in</property>
                             <cell id="937">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17521,7 +17839,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="940">
-                            <property name="height">0.5104166666666666in</property>
                             <cell id="941">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17562,7 +17879,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="943">
-                            <property name="height">0.20833333333333334in</property>
                             <cell id="944">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17603,7 +17919,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="951">
-                            <property name="height">0.19791666666666666in</property>
                             <cell id="952">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17616,7 +17931,7 @@ WHERE sb.id = ?;]]></xml-property>
                                 <label id="954">
                                     <property name="fontSize">10pt</property>
                                     <property name="marginLeft">3pt</property>
-                                    <text-property name="text">Электромашина: (марка, тип),	</text-property>
+                                    <text-property name="text">Электромашина: (марка, тип)	</text-property>
                                 </label>
                             </cell>
                             <cell id="953">
@@ -17644,7 +17959,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="955">
-                            <property name="height">0.19791666666666666in</property>
                             <cell id="956">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17685,7 +17999,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="959">
-                            <property name="height">0.21875in</property>
                             <cell id="960">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17727,7 +18040,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="974">
-                            <property name="height">0.20833333333333334in</property>
                             <cell id="975">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17769,7 +18081,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="977">
-                            <property name="height">0.21875in</property>
                             <cell id="978">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17900,7 +18211,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="997">
-                            <property name="height">0.19791666666666666in</property>
                             <cell id="998">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -18055,7 +18365,6 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="1025">
-                            <property name="height">0.19791666666666666in</property>
                             <cell id="1026">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -18137,44 +18446,102 @@ WHERE sb.id = ?;]]></xml-property>
                             </cell>
                         </row>
                     </grid>
-                    <label id="1087">
-                        <property name="marginBottom">10pt</property>
-                        <text-property name="text">соответствуют требованиям технического регламента Таможенного союза "О безопасности колесных
-транспортных средств"</text-property>
+                    <label id="1148">
+                        <text-property name="text">соответствуют требованиям технического регламента Таможенного союза
+"О безопасности колесных транспортных средств".</text-property>
                     </label>
-                    <grid id="1088">
-                        <property name="width">7.354166666666667in</property>
-                        <column id="1089">
-                            <property name="width">2.8229166666666665in</property>
-                        </column>
-                        <column id="1090">
-                            <property name="width">2.0833333333333335in</property>
-                        </column>
-                        <column id="1091">
-                            <property name="width">2.4479166666666665in</property>
-                        </column>
-                        <row id="1092">
-                            <cell id="1093">
-                                <label id="1096">
+                    <grid id="1168">
+                        <column id="1169"/>
+                        <column id="1170"/>
+                        <row id="1171">
+                            <cell id="1172">
+                                <label id="1174">
+                                    <property name="marginTop">3pt</property>
                                     <text-property name="text">ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ</text-property>
                                 </label>
                             </cell>
-                            <cell id="1094">
-                                <label id="1097">
-                                    <property name="textAlign">right</property>
-                                    <text-property name="text">Дата оформления</text-property>
-                                </label>
+                            <cell id="1173">
+                                <grid id="1175">
+                                    <column id="1176"/>
+                                    <column id="1177"/>
+                                    <row id="1178">
+                                        <cell id="1179">
+                                            <label id="1181">
+                                                <property name="textAlign">right</property>
+                                                <text-property name="text">Дата оформления</text-property>
+                                            </label>
+                                        </cell>
+                                        <cell id="1180">
+                                            <data id="1182">
+                                                <structure name="dateTimeFormat">
+                                                    <property name="category">Custom</property>
+                                                    <property name="pattern">dd.MM.yyyy</property>
+                                                </structure>
+                                                <property name="dataSet">SBKTS</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">issue_date</property>
+                                                        <text-property name="displayName">issue_date</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["issue_date"]</expression>
+                                                        <property name="dataType">date</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">issue_date</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
                             </cell>
-                            <cell id="1095"/>
                         </row>
-                        <row id="1098">
-                            <cell id="1099">
+                    </grid>
+                    <data id="1150">
+                        <property name="dataSet">SBKTS</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">vehicle_additional_information</property>
+                                <text-property name="displayName">vehicle_additional_information</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["vehicle_additional_information"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">vehicle_additional_information</property>
+                    </data>
+                    <grid id="1183">
+                        <property name="width">7.354166666666667in</property>
+                        <column id="1184">
+                            <property name="width">2.4583333333333335in</property>
+                        </column>
+                        <column id="1185">
+                            <property name="width">1.96875in</property>
+                        </column>
+                        <column id="1186">
+                            <property name="width">2.9270833333333335in</property>
+                        </column>
+                        <row id="1187">
+                            <cell id="1188">
                                 <label id="1102">
                                     <text-property name="text">Руководитель органа контроля</text-property>
                                 </label>
                             </cell>
-                            <cell id="1100"/>
-                            <cell id="1101"/>
+                            <cell id="1189">
+                                <label id="1167">
+                                    <text-property name="text">_________________________</text-property>
+                                </label>
+                            </cell>
+                            <cell id="1190">
+                                <data id="1130">
+                                    <property name="dataSet">SBKTS</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">director_name</property>
+                                            <text-property name="displayName">director_name</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["director_name"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">director_name</property>
+                                </data>
+                            </cell>
                         </row>
                     </grid>
                 </cell>
