@@ -52,7 +52,7 @@
             <property name="dataType">decimal</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">1</value>
+                <value type="constant">3</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -5448,10 +5448,10 @@ WHERE sb.id = ?
                     <text-property name="heading">variant_id</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">electric_motor_desc_01</property>
+                    <property name="columnName">electric_motors_01</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">electric_motor_desc_01</text-property>
-                    <text-property name="heading">electric_motor_desc_01</text-property>
+                    <text-property name="displayName">electric_motors_01</text-property>
+                    <text-property name="heading">electric_motors_01</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">electric_motor_operating_voltage_01</property>
@@ -5460,10 +5460,10 @@ WHERE sb.id = ?
                     <text-property name="heading">electric_motor_operating_voltage_01</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">electric_motor_max30min_power_01</property>
+                    <property name="columnName">electric_motor_max_30_min_power_01</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">electric_motor_max30min_power_01</text-property>
-                    <text-property name="heading">electric_motor_max30min_power_01</text-property>
+                    <text-property name="displayName">electric_motor_max_30_min_power_01</text-property>
+                    <text-property name="heading">electric_motor_max_30_min_power_01</text-property>
                 </structure>
             </list-property>
             <list-property name="parameters">
@@ -5492,7 +5492,7 @@ WHERE sb.id = ?
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">electric_motor_desc_01</property>
+                        <property name="name">electric_motors_01</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -5502,7 +5502,7 @@ WHERE sb.id = ?
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">electric_motor_max30min_power_01</property>
+                        <property name="name">electric_motor_max_30_min_power_01</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -5525,8 +5525,8 @@ WHERE sb.id = ?
                 </structure>
                 <structure>
                     <property name="position">3</property>
-                    <property name="name">electric_motor_desc_01</property>
-                    <property name="nativeName">electric_motor_desc_01</property>
+                    <property name="name">electric_motors_01</property>
+                    <property name="nativeName">electric_motors_01</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
@@ -5539,8 +5539,8 @@ WHERE sb.id = ?
                 </structure>
                 <structure>
                     <property name="position">5</property>
-                    <property name="name">electric_motor_max30min_power_01</property>
-                    <property name="nativeName">electric_motor_max30min_power_01</property>
+                    <property name="name">electric_motor_max_30_min_power_01</property>
+                    <property name="nativeName">electric_motor_max_30_min_power_01</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
@@ -5548,19 +5548,46 @@ WHERE sb.id = ?
             <xml-property name="queryText"><![CDATA[SELECT
     sb.id AS sbkts_id,
     v.id AS variant_id,
-    em.electric_motor_description AS electric_motor_desc_01,
-    trim_scale(em.electric_motor_operating_voltage)::text AS electric_motor_operating_voltage_01,
-    trim_scale(em.max30min_power)::text AS electric_motor_max30min_power_01
+
+    -- Электромашины типа '01' в формате description/name,description/name,...
+    (
+        SELECT string_agg(
+                   COALESCE(em.electric_motor_description, '-') || '/' || COALESCE(emk.name, '-'),
+                   ', '
+               )
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code = '01'
+    ) AS electric_motors_01,
+
+    -- Рабочее напряжение электромашин типа '01', через запятую (формат без .00)
+    (
+        SELECT string_agg(trim_scale(em.electric_motor_operating_voltage)::text, ', ')
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code = '01'
+    ) AS electric_motor_operating_voltage_01,
+
+    -- Единица измерения максимальной 30-минутной мощности, через запятую
+
+(
+    SELECT string_agg(trim_scale(em.max30min_power)::text, ', ')
+    FROM dictionary_vehicle_electric_motor em
+    LEFT JOIN dictionary_electric_machine_type emk
+           ON em.electric_motor_kind = emk.id
+    WHERE em.vehicle_variant = v.id
+      AND emk.code = '01'
+) AS electric_motor_max_30_min_power_01
+
 
 FROM sbkts_sbkts AS sb
 LEFT JOIN dictionary_vehicle_variant AS v
        ON v.id = sb.vehicle_variant_details
-LEFT JOIN dictionary_vehicle_electric_motor em
-       ON em.vehicle_variant = v.id
-
-WHERE sb.id = ?
- 
-ORDER BY em.id;
+WHERE sb.id = ?;
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
@@ -6387,22 +6414,22 @@ ORDER BY em.id;
                     <text-property name="heading">variant_id</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">electric_motor_desc</property>
+                    <property name="columnName">electric_motor_desc_not_01</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">electric_motor_desc</text-property>
-                    <text-property name="heading">electric_motor_desc</text-property>
+                    <text-property name="displayName">electric_motor_desc_not_01</text-property>
+                    <text-property name="heading">electric_motor_desc_not_01</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">electric_motor_operating_voltage</property>
+                    <property name="columnName">electric_motor_operating_voltage_not_01</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">electric_motor_operating_voltage</text-property>
-                    <text-property name="heading">electric_motor_operating_voltage</text-property>
+                    <text-property name="displayName">electric_motor_operating_voltage_not_01</text-property>
+                    <text-property name="heading">electric_motor_operating_voltage_not_01</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">electric_motor_max30min_power</property>
+                    <property name="columnName">electric_motor_max30min_power_not_01</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="displayName">electric_motor_max30min_power</text-property>
-                    <text-property name="heading">electric_motor_max30min_power</text-property>
+                    <text-property name="displayName">electric_motor_max30min_power_not_01</text-property>
+                    <text-property name="heading">electric_motor_max30min_power_not_01</text-property>
                 </structure>
             </list-property>
             <list-property name="parameters">
@@ -6431,17 +6458,17 @@ ORDER BY em.id;
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">electric_motor_desc</property>
+                        <property name="name">electric_motor_desc_not_01</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">electric_motor_operating_voltage</property>
+                        <property name="name">electric_motor_operating_voltage_not_01</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">electric_motor_max30min_power</property>
+                        <property name="name">electric_motor_max30min_power_not_01</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -6464,22 +6491,22 @@ ORDER BY em.id;
                 </structure>
                 <structure>
                     <property name="position">3</property>
-                    <property name="name">electric_motor_desc</property>
-                    <property name="nativeName">electric_motor_desc</property>
+                    <property name="name">electric_motor_desc_not_01</property>
+                    <property name="nativeName">electric_motor_desc_not_01</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
-                    <property name="name">electric_motor_operating_voltage</property>
-                    <property name="nativeName">electric_motor_operating_voltage</property>
+                    <property name="name">electric_motor_operating_voltage_not_01</property>
+                    <property name="nativeName">electric_motor_operating_voltage_not_01</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
-                    <property name="name">electric_motor_max30min_power</property>
-                    <property name="nativeName">electric_motor_max30min_power</property>
+                    <property name="name">electric_motor_max30min_power_not_01</property>
+                    <property name="nativeName">electric_motor_max30min_power_not_01</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
@@ -6487,18 +6514,44 @@ ORDER BY em.id;
             <xml-property name="queryText"><![CDATA[SELECT
     sb.id AS sbkts_id,
     v.id AS variant_id,
-    em.electric_motor_description  AS electric_motor_desc,
-    trim_scale(em.electric_motor_operating_voltage)::text AS electric_motor_operating_voltage,
-    trim_scale(em.max30min_power)::text AS electric_motor_max30min_power
+
+    -- Электромашины (code != '01') — форматы: description / name
+    (
+        SELECT string_agg(
+                   COALESCE(em.electric_motor_description, '-') || '/' || COALESCE(emk.name, '-'),
+                   ', '
+               )
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code != '01'
+    ) AS electric_motor_desc_not_01,
+
+    -- Рабочее напряжение электромашин (без .00)
+    (
+        SELECT string_agg(trim_scale(em.electric_motor_operating_voltage)::text, ', ')
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code != '01'
+    ) AS electric_motor_operating_voltage_not_01,
+
+    -- Максимальная 30-минутная мощность электромашин (без .00)
+    (
+        SELECT string_agg(trim_scale(em.max30min_power)::text, ', ')
+        FROM dictionary_vehicle_electric_motor em
+        LEFT JOIN dictionary_electric_machine_type emk
+               ON em.electric_motor_kind = emk.id
+        WHERE em.vehicle_variant = v.id
+          AND emk.code != '01'
+    ) AS electric_motor_max30min_power_not_01
 
 FROM sbkts_sbkts AS sb
 LEFT JOIN dictionary_vehicle_variant AS v
        ON v.id = sb.vehicle_variant_details
-LEFT JOIN dictionary_vehicle_electric_motor em
-       ON em.vehicle_variant = v.id
-
-WHERE sb.id = ?
-ORDER BY em.id;
+WHERE sb.id = ?;
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
@@ -15754,7 +15807,7 @@ WHERE sb.id = ?;
     </page-setup>
     <body>
         <grid id="4">
-            <property name="height">9.385416666666666in</property>
+            <property name="height">9.354166666666666in</property>
             <property name="width">0in</property>
             <property name="dataSet">категория</property>
             <list-property name="boundDataColumns">
@@ -15769,7 +15822,7 @@ WHERE sb.id = ?;
                 <property name="width">7.541666666666667in</property>
             </column>
             <row id="6">
-                <property name="height">9.385416666666666in</property>
+                <property name="height">9.354166666666666in</property>
                 <cell id="7">
                     <property name="fontFamily">"Times New Roman"</property>
                     <grid id="10">
@@ -17574,7 +17627,7 @@ WHERE sb.id = ?;
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'electric'</expression>
+                                    <expression name="valueExpr" type="javascript">row["type"] != 'electric' &amp; ["type"] != 'gasHybrid'</expression>
                                 </structure>
                             </list-property>
                             <cell id="2018">
@@ -17601,34 +17654,22 @@ WHERE sb.id = ?;
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <list id="2241">
+                                <data id="2021">
+                                    <property name="marginLeft">3pt</property>
                                     <property name="dataSet">Электродвигатель электромобиля</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">electric_motor_desc_01</property>
-                                            <text-property name="displayName">electric_motor_desc_01</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_desc_01"]</expression>
+                                            <property name="name">electric_motors_01</property>
+                                            <text-property name="displayName">electric_motors_01</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["electric_motors_01"]</expression>
                                             <property name="dataType">string</property>
                                         </structure>
                                     </list-property>
-                                    <detail>
-                                        <data id="2242">
-                                            <property name="marginLeft">3pt</property>
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_desc_01</property>
-                                        </data>
-                                    </detail>
-                                </list>
+                                    <property name="resultSetColumn">electric_motors_01</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="2022">
-                            <list-property name="visibility">
-                                <structure>
-                                    <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'electric'</expression>
-                                </structure>
-                            </list-property>
                             <cell id="2023">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17653,7 +17694,8 @@ WHERE sb.id = ?;
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <list id="2243">
+                                <data id="2026">
+                                    <property name="marginLeft">3pt</property>
                                     <property name="dataSet">Электродвигатель электромобиля</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
@@ -17663,24 +17705,11 @@ WHERE sb.id = ?;
                                             <property name="dataType">string</property>
                                         </structure>
                                     </list-property>
-                                    <detail>
-                                        <data id="2244">
-                                            <property name="marginLeft">3pt</property>
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_operating_voltage_01</property>
-                                        </data>
-                                    </detail>
-                                </list>
+                                    <property name="resultSetColumn">electric_motor_operating_voltage_01</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="2027">
-                            <list-property name="visibility">
-                                <structure>
-                                    <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'electric'</expression>
-                                </structure>
-                            </list-property>
                             <cell id="2028">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17705,25 +17734,19 @@ WHERE sb.id = ?;
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <list id="2245">
+                                <data id="2031">
+                                    <property name="marginLeft">3pt</property>
                                     <property name="dataSet">Электродвигатель электромобиля</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">electric_motor_max30min_power_01</property>
-                                            <text-property name="displayName">electric_motor_max30min_power_01</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_max30min_power_01"]</expression>
+                                            <property name="name">electric_motor_max_30_min_power_unit_01</property>
+                                            <text-property name="displayName">electric_motor_max_30_min_power_unit_01</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_max_30_min_power_unit_01"]</expression>
                                             <property name="dataType">string</property>
                                         </structure>
                                     </list-property>
-                                    <detail>
-                                        <data id="2246">
-                                            <property name="marginLeft">3pt</property>
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_max30min_power_01</property>
-                                        </data>
-                                    </detail>
-                                </list>
+                                    <property name="resultSetColumn">electric_motor_max_30_min_power_unit_01</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="2032">
@@ -17816,7 +17839,7 @@ WHERE sb.id = ?;
                             <list-property name="visibility">
                                 <structure>
                                     <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'gasHybrid' &amp; row["type"] != 'dieselHybrid' &amp; row["type"] != 'gasolineHybrid'</expression>
+                                    <expression name="valueExpr" type="javascript">row["type"] != 'electric' &amp; ["type"] != 'gasHybrid'</expression>
                                 </structure>
                             </list-property>
                             <cell id="2043">
@@ -17843,84 +17866,22 @@ WHERE sb.id = ?;
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <list id="2233">
-                                    <property name="dataSet">Электромашина</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">electric_motor_desc</property>
-                                            <text-property name="displayName">electric_motor_desc</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_desc"]</expression>
-                                            <property name="dataType">string</property>
-                                        </structure>
-                                    </list-property>
-                                    <detail>
-                                        <data id="2234">
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_desc</property>
-                                        </data>
-                                    </detail>
-                                </list>
-                            </cell>
-                        </row>
-                        <row id="2228">
-                            <list-property name="visibility">
-                                <structure>
-                                    <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'gasHybrid' &amp; row["type"] != 'dieselHybrid' &amp; row["type"] != 'gasolineHybrid'</expression>
-                                </structure>
-                            </list-property>
-                            <cell id="2229">
-                                <property name="borderBottomStyle">solid</property>
-                                <property name="borderBottomWidth">thin</property>
-                                <property name="borderLeftStyle">solid</property>
-                                <property name="borderLeftWidth">thin</property>
-                                <property name="borderRightStyle">solid</property>
-                                <property name="borderRightWidth">thin</property>
-                                <property name="borderTopStyle">solid</property>
-                                <property name="borderTopWidth">thin</property>
-                                <label id="2231">
-                                    <property name="fontSize">10pt</property>
+                                <data id="2046">
                                     <property name="marginLeft">3pt</property>
-                                    <text-property name="text">Максимальная 30-минутная мощность, кВт	</text-property>
-                                </label>
-                            </cell>
-                            <cell id="2230">
-                                <property name="borderBottomStyle">solid</property>
-                                <property name="borderBottomWidth">thin</property>
-                                <property name="borderLeftStyle">solid</property>
-                                <property name="borderLeftWidth">thin</property>
-                                <property name="borderRightStyle">solid</property>
-                                <property name="borderRightWidth">thin</property>
-                                <property name="borderTopStyle">solid</property>
-                                <property name="borderTopWidth">thin</property>
-                                <list id="2235">
                                     <property name="dataSet">Электромашина</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">electric_motor_max30min_power</property>
-                                            <text-property name="displayName">electric_motor_max30min_power</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_max30min_power"]</expression>
+                                            <property name="name">electric_motors_not_01</property>
+                                            <text-property name="displayName">electric_motors_not_01</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["electric_motors_not_01"]</expression>
                                             <property name="dataType">string</property>
                                         </structure>
                                     </list-property>
-                                    <detail>
-                                        <data id="2236">
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_max30min_power</property>
-                                        </data>
-                                    </detail>
-                                </list>
+                                    <property name="resultSetColumn">electric_motors_not_01</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="2047">
-                            <list-property name="visibility">
-                                <structure>
-                                    <property name="format">all</property>
-                                    <expression name="valueExpr" type="javascript">row["type"] != 'gasHybrid' &amp; row["type"] != 'dieselHybrid' &amp; row["type"] != 'gasolineHybrid'</expression>
-                                </structure>
-                            </list-property>
                             <cell id="2048">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
@@ -17945,24 +17906,19 @@ WHERE sb.id = ?;
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <list id="2237">
+                                <data id="2051">
+                                    <property name="marginLeft">3pt</property>
                                     <property name="dataSet">Электромашина</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">electric_motor_operating_voltage</property>
-                                            <text-property name="displayName">electric_motor_operating_voltage</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_operating_voltage"]</expression>
+                                            <property name="name">electric_motor_operating_voltage_not_01</property>
+                                            <text-property name="displayName">electric_motor_operating_voltage_not_01</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["electric_motor_operating_voltage_not_01"]</expression>
                                             <property name="dataType">string</property>
                                         </structure>
                                     </list-property>
-                                    <detail>
-                                        <data id="2238">
-                                            <property name="paddingTop">2pt</property>
-                                            <property name="paddingBottom">2pt</property>
-                                            <property name="resultSetColumn">electric_motor_operating_voltage</property>
-                                        </data>
-                                    </detail>
-                                </list>
+                                    <property name="resultSetColumn">electric_motor_operating_voltage_not_01</property>
+                                </data>
                             </cell>
                         </row>
                         <row id="2057">
@@ -18322,6 +18278,7 @@ WHERE sb.id = ?;
                             </cell>
                         </row>
                         <row id="2110">
+                            <property name="height">0.22916666666666666in</property>
                             <cell id="2111">
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
